@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>NTUBS Welcome Tea - Dharma team game</title>
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
+    <style>
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Fira Sans', sans-serif;
+    color: #111;
+}
+header {
+    font-size: 2em;
+    line-height: 2em;
+    text-align: center;
+    font-weight: 200;
+    display: none;
+}
+aside {
+    font-size: .8em;
+    text-align: center;
+    display: none;
+}
+footer {
+    font-size: .8em;
+    text-align: center;
+    visibility: hidden;
+}
+#controls {
+    margin: 0 auto;
+    max-width: 48em;
+    text-align: center;
+    clear: both;
+}
+#main {
+    margin: 0 auto;
+    margin-top: 1em;
+    width: 95%;
+    max-width: 50em;
+    text-align: center;
+}
+#question {
+    margin: 0em;
+    margin-bottom: 1em;
+    padding: 1em;
+    width: 100%;
+    min-height: 6em;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.35);
+    border-radius: 2px;
+    text-align: left;
+    box-sizing: border-box;
+}
+#options {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.option {
+    cursor: pointer;
+    margin: .5em 1em;
+    padding: 1em;
+    min-width: 23em;
+    min-height: 1em;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.35);
+    border-radius: 2px;
+    text-align: left;
+    box-sizing: border-box;
+    flex: 1 0 23em;
+}
+.active:hover {
+    box-shadow: 0px 0px 6px #999;
+}
+button {
+    background: #fff;
+    font: inherit;
+    font-size: .7em;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.35);
+    border-radius: 2px;
+    border: 0;
+    cursor: pointer;
+    padding: 1em;
+    min-width: 5em;
+    margin: .5em;
+}
+button:hover {
+    box-shadow: 0px 0px 6px #999;
+}
+#controls {
+    display: flex;
+    justify-content: center;
+}
+#controls button {
+    flex: 0 0 12em;
+}
+
+@keyframes spin {  
+    from {transform: rotate(0deg); }
+    to {transform: rotate(360deg); }
+}
+.wheel-spin {
+    animation: spin 1s infinite linear;
+}
+.wheel {
+    margin: 0 auto;
+    border-radius: 15em;
+    width: 30em;
+    height: 30em;
+    border: 1px solid black;
+    position: relative;
+}
+.wheel-section {
+    width: 11.4805em;
+    height: 15em;
+    border: 1px solid black;
+    position: absolute;
+    top: calc(50% - 15em);
+    left: calc(50% - 5.7em);
+    text-align: center;
+    transform-origin: 50% calc(100% - 1px);
+    box-sizing: border-box;
+    padding-top: 3em;
+}
+.ws-1 {
+    transform: rotate(0deg);
+}
+.ws-2 {
+    transform: rotate(45deg);
+}
+.ws-3 {
+    transform: rotate(90deg);
+}
+.ws-4 {
+    transform: rotate(135deg);
+}
+.ws-5 {
+    transform: rotate(180deg);
+}
+.ws-6 {
+    transform: rotate(225deg);
+}
+.ws-7 {
+    transform: rotate(270deg);
+}
+.ws-8 {
+    transform: rotate(315deg);
+}
+    </style>
+</head>
+<body>
+
+<main id="main">
+<div id="question" class="convert-emoji">
+    <div class="wheel">
+        <div class="wheel-section ws-1">🙏1</div>
+        <div class="wheel-section ws-2">🙏2</div>
+        <div class="wheel-section ws-3">🙏3</div>
+        <div class="wheel-section ws-4">🙏4</div>
+        <div class="wheel-section ws-5">🙏5</div>
+        <div class="wheel-section ws-6">🙏6</div>
+        <div class="wheel-section ws-7">🙏7</div>
+        <div class="wheel-section ws-8">🙏8</div>
+    </div>
+</div>
+<div id="options">
+    <button class="option">Dharma Propagation</button>
+    <button class="option">Fellowship</button>
+    <button class="option">Publication</button>
+    <button class="option">None of those</button>
+</div>
+<div id="controls">
+    <button>Next Question</button>
+</div>
+</main>
+<script src="//cdn.jsdelivr.net/emojione/2.2.6/lib/js/emojione.min.js"></script>
+<script src="//cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".convert-emoji").each(function() {
+        var original = $(this).html();
+        var converted = emojione.toImage(original);
+        $(this).html(converted);
+    });
+});
+</script>
+
+</body>
+</html>
