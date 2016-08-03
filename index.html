@@ -6,6 +6,7 @@
     <title>NTUBS Welcome Tea - Dharma team game</title>
     
     <link rel="stylesheet" href="//cdn.jsdelivr.net/normalize/3.0.3/normalize.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/sweetalert2/4.1.0/sweetalert2.min.css"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
     <style>
 html {
@@ -41,6 +42,7 @@ body {
     border-radius: 2px;
     text-align: left;
     box-sizing: border-box;
+    overflow: hidden;
 }
 #question::after {
     content: '';
@@ -221,11 +223,14 @@ button:hover {
     <button id="spin-btn">Spin wheel</button>
 </div>
 </main>
+
+<script src="//cdn.jsdelivr.net/es6-promise/3.1.2/es6-promise.min.js"></script>
 <script src="//cdn.jsdelivr.net/emojione/2.2.6/lib/js/emojione.min.js"></script>
 <script src="//cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+<script src="//cdn.jsdelivr.net/sweetalert2/4.1.0/sweetalert2.min.js"></script>
+<script src="//cdn.jsdelivr.net/gsap/1.19.0/TweenLite.min.js"></script>
+<script src="//cdn.jsdelivr.net/gsap/1.19.0/easing/EasePack.min.js"></script>
+<script src="//cdn.jsdelivr.net/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
 <script>
 $(document).ready(function() {
     $(".convert-emoji").each(function() {
@@ -235,12 +240,12 @@ $(document).ready(function() {
     });
     var wheel = $(".wheel");
     var rotation = Math.round(Math.random() * 720 + 720);
-    //TweenLite.to(wheel, 1, {rotation: "+=" + rotation, ease: Expo.easeOut});
+    var answer = null;
+    TweenLite.to(wheel, 1, {rotation: "+=" + rotation, ease: Expo.easeOut});
 
     $("#spin-btn").click(function () {
         rotation = Math.round(Math.random() * 720 + 720);
-        TweenLite.to(wheel, .5, {rotation: "+=" + rotation, ease: Expo.easeOut, onComplete: function () { 
-            console.log("Something");
+        TweenLite.to(wheel, 5, {rotation: "+=" + rotation, ease: Expo.easeOut, onComplete: function () { 
             var tr = $(".wheel").css("transform");
 
             // https://css-tricks.com/get-value-of-css-rotation-through-javascript/
@@ -252,14 +257,30 @@ $(document).ready(function() {
             if (angle < 0)
                 angle += 360;
 
-            console.log('Rotate: ' + angle + 'deg');
-
             var cat = 8 - Math.floor(angle / 45);
-            $("#main-question-display").html($(".ws-" + cat + " > .ws-content").html());
+            var pointed = $(".ws-" + cat + " > .ws-content");
+            $("#main-question-display").html($(pointed).html());
+            answer = {
+                value: $(pointed).data("answer"),
+                description: $(pointed).data("item")
+            };
 
             $("#options").show();
             $("#backdrop").show();
         }});
+    });
+
+    $(".option").click(function () {
+        var chosen = $(this).data("value");
+        var correct = answer.value;
+        if (chosen === correct) {
+            swal("Yay", "It's a correct one!", "success");
+        } else {
+            swal("Nay", "It's not correct!", "error");
+        }
+
+        $("#options").hide();
+        $("#backdrop").hide();
     });
 });
 </script>
