@@ -5,12 +5,9 @@
     <meta charset="utf-8">
     <title>NTUBS Welcome Tea - Dharma team game</title>
     
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/normalize/3.0.3/normalize.min.css"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
     <style>
-html, body {
-    margin: 0;
-    padding: 0;
-}
 body {
     font-family: "Helvetica", "Arial", sans-serif;
     color: #111;
@@ -38,6 +35,19 @@ body {
     border-radius: 2px;
     text-align: left;
     box-sizing: border-box;
+}
+#question::after {
+    content: '';
+    position: absolute;
+    top: 1em;
+    left: calc(50% - 1em);
+    border-color: #544400 transparent transparent transparent;
+    border-style: solid;
+    border-width: 3.5em 1em 0 1em;
+    width: 0;
+    height: 0;
+    z-index: 5;
+    opacity: .8;
 }
 #options {
     margin: 0;
@@ -84,14 +94,6 @@ button:hover {
 #controls button {
     flex: 0 0 12em;
 }
-
-@keyframes spin {  
-    from {transform: rotate(0deg); }
-    to {transform: rotate(360deg); }
-}
-.wheel-spin {
-    animation: spin 1s infinite linear;
-}
 .wheel::before {
     content: "";
     position: absolute;
@@ -102,7 +104,7 @@ button:hover {
     z-index: 1;
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/df/Dharma_Wheel.svg');
     background-size: 100%;
-    opacity: 0.5;
+    opacity: .5;
 }
 .wheel {
     margin: 0 auto;
@@ -126,19 +128,6 @@ button:hover {
     border-top-left-radius: 15em 4em;
     border-top-right-radius: 15em 4em;
 }
-/*.wheel-section::after {
-    content: '';
-    position: absolute;
-    bottom: 0px;
-    left: calc(50% - 5.7em);
-    border-color: gray transparent transparent transparent;
-    border-style: solid;
-    border-width: 13.7em 5.7em 0px 5.7em;
-    width: 0;
-    height: 0;
-    z-index: -1;
-    opacity: .1;
-}*/
 .ws-content {
     border: 1px solid #ddd;
     width: 2.5em;
@@ -196,17 +185,26 @@ button:hover {
     <button class="option">None of those</button>
 </div>
 <div id="controls">
-    <button>Spin wheel</button>
+    <button id="spin-btn">Spin wheel</button>
 </div>
 </main>
 <script src="//cdn.jsdelivr.net/emojione/2.2.6/lib/js/emojione.min.js"></script>
 <script src="//cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
 <script>
 $(document).ready(function() {
     $(".convert-emoji").each(function() {
         var original = $(this).html();
         var converted = emojione.toImage(original);
         $(this).html(converted);
+    });
+
+    $("#spin-btn").click(function () {
+        var wheel = $(".wheel");
+        var rotation = Math.round(Math.random() * 720 + 720);
+        TweenLite.to(wheel, 5, {rotation: "+=" + rotation, ease: Expo.easeOut});
     });
 });
 </script>
