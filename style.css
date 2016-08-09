@@ -143,7 +143,7 @@ button:hover {
     top: calc(50% - 15em);
     left: calc(50% - 5.7em);
     text-align: center;
-    transform-origin: 50% calc(100%);
+    transform-origin: 50% 100%;
     box-sizing: border-box;
     padding-top: 1.6em;
     border-top-left-radius: 15em 4em;
